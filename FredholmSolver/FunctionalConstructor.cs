@@ -24,18 +24,38 @@ namespace FredholmSolver
         case ApproximationType.ShoenbergMarsden:
           return f(additionalGrid[j]);
 
-        case ApproximationType.Sablonniere:
+        case ApproximationType.Averaging:
           if (j == -2 || j == Configuration.GridPoints - 1)
-          {
             return f(additionalGrid[j]);
-          }
 
           double a = -1.0 / 8;
           double b = 5.0 / 4;
           double c = -1.0 / 8;
           return a * f(additionalGrid[j - 1]) + b * f(additionalGrid[j]) + c * f(additionalGrid[j + 1]);
+        
+        case ApproximationType.Proectional:
+          if (j == -2)
+            return f(grid[0]);
+          
+          if (j == Configuration.GridPoints - 1)
+            return f(grid[Configuration.GridPoints]);
+          
+          if (j == -1)
+            return -1.0 / 2 * f(grid[0]) + 2 * f(0.5 * (grid[0] + grid[1])) - 1.0 / 2 * f(grid[1]);
+          
+          if (j == Configuration.GridPoints - 2)
+            return -1.0 / 2 * f(grid[Configuration.GridPoints - 1])
+              + 2 * f(0.5 * (grid[Configuration.GridPoints - 1] + grid[Configuration.GridPoints])) 
+              -1.0 / 2 * f(grid[Configuration.GridPoints]);
 
-        case ApproximationType.Trigonometric:
+
+          return 1.0 / 14 * f(grid[j]) 
+                 - 2.0 / 7 * f(0.5 * (grid[j] + grid[j + 1]))
+                 + 10.0 / 7 * f(0.5 * (grid[j + 1] + grid[j + 2]))
+                 - 2.0 / 7 * f(0.5 * (grid[j + 2] + grid[j + 3]))
+                 + 1.0 / 14 * f(grid[j + 3]);
+
+        case ApproximationType.AveragingTrigonometric:
           if (j == -2 || j == Configuration.GridPoints - 1)
           {
             return f(additionalGrid[j]);
@@ -58,7 +78,7 @@ namespace FredholmSolver
           a = 1 - b - c;
           return a * f(additionalGrid[j - 1]) + b * f(additionalGrid[j]) + c * f(additionalGrid[j + 1]);
 
-        case ApproximationType.Hyperbolic:
+        case ApproximationType.AveragingHyperbolic:
           if (j == -2 || j == Configuration.GridPoints - 1)
           {
             return f(additionalGrid[j]);

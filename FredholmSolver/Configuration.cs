@@ -23,6 +23,6 @@ namespace FredholmSolver
     public static Func<double, double> U = s => 2 * Math.Sin(s);
 
     //Используемый метод аппроксимации
-    public const ApproximationType ApproxType = ApproximationType.Sablonniere;
+    public const ApproximationType ApproxType = ApproximationType.Proectional;
   }
 }

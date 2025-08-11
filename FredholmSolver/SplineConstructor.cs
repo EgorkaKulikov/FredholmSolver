@@ -18,11 +18,12 @@ namespace FredholmSolver
       switch (Configuration.ApproxType)
       {
         case ApproximationType.ShoenbergMarsden:
-        case ApproximationType.Sablonniere:
+        case ApproximationType.Averaging:
+        case  ApproximationType.Proectional:
           return BSplineAtPoint(grid, splineNumber, point);
-        case ApproximationType.Trigonometric:
+        case ApproximationType.AveragingTrigonometric:
           return TrigSplineAtPoint(grid, splineNumber, point);
-        case ApproximationType.Hyperbolic:
+        case ApproximationType.AveragingHyperbolic:
           return HypSplineAtPoint(grid, splineNumber, point);
         default:
           throw new NotSupportedException($"Spline type {Configuration.ApproxType.ToString()} is not supported");
