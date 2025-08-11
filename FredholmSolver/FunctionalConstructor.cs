@@ -19,6 +19,13 @@ namespace FredholmSolver
       )
     {
       int j = funcNumber;
+      
+      Func<double, double> Derivative(Func<double, double> func, double h = 1e-5) => 
+        x => (func(x + h) - func(x - h)) / (2 * h);
+      
+      Func<double, double> fDer = Derivative(f);
+      Func<double, double> fDer2 = Derivative(fDer);
+
       switch (Configuration.ApproxType)
       {
         case ApproximationType.ShoenbergMarsden:
@@ -32,6 +39,16 @@ namespace FredholmSolver
           double b = 5.0 / 4;
           double c = -1.0 / 8;
           return a * f(additionalGrid[j - 1]) + b * f(additionalGrid[j]) + c * f(additionalGrid[j + 1]);
+        
+        case ApproximationType.DeBoorFix0:
+          return f(grid[j]) + (1.0 / 2 * (grid[j + 1] + grid[j + 2]) - grid[j]) * fDer(grid[j])
+                            + 1.0 / 2 * (grid[j + 1] + grid[j]) * (grid[j + 2] - grid[j]) * fDer2(grid[j]);
+        
+        case ApproximationType.DeBoorFix1:
+          return f(grid[j + 1]) + 1.0 / 2 * (grid[j + 2] - grid[j + 1]) * fDer(grid[j + 1]);
+        
+        case ApproximationType.DeBoorFix2:
+          return f(grid[j + 2]) - 1.0 / 2 * (grid[j + 2] - grid[j + 1]) * fDer(grid[j + 2]);
         
         case ApproximationType.Proectional:
           if (j == -2)

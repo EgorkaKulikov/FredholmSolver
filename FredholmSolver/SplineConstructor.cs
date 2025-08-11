@@ -19,6 +19,9 @@ namespace FredholmSolver
       {
         case ApproximationType.ShoenbergMarsden:
         case ApproximationType.Averaging:
+        case ApproximationType.DeBoorFix0:
+        case ApproximationType.DeBoorFix1:
+        case ApproximationType.DeBoorFix2:
         case  ApproximationType.Proectional:
           return BSplineAtPoint(grid, splineNumber, point);
         case ApproximationType.AveragingTrigonometric:
