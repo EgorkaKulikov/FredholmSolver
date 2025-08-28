@@ -21,6 +21,7 @@ namespace FredholmSolver
     public ApproximationEngine()
     {
       InitializeGrid();
+      InitializeAdditionalGrid();
     }
 
     /// <summary>
@@ -175,26 +176,37 @@ namespace FredholmSolver
     
 
     /// <summary>
-    /// Создание основной и вспомогательной сетки.
+    /// Создание основной сетки.
     /// </summary>
     private void InitializeGrid()
     {
       grid = new Dictionary<int, double>();
-      additionalGrid = new Dictionary<int, double>();
-
+      
       for (int i = 0; i <= Configuration.GridPoints; i++)
       {
-        grid[i] = Configuration.Left + i * 1.0 * (Configuration.Right - Configuration.Left) / Configuration.GridPoints;
+        var theta = 1.0 * i / Configuration.GridPoints;
+        
+        grid[i] = Configuration.Left + theta * (Configuration.Right - Configuration.Left);
       }
+      
       grid[-2] = grid[0] - 2 * Configuration.Eps;
       grid[-1] = grid[0] - Configuration.Eps;
       grid[Configuration.GridPoints + 1] = grid[Configuration.GridPoints] + Configuration.Eps;
       grid[Configuration.GridPoints + 2] = grid[Configuration.GridPoints] + 2 * Configuration.Eps;
-
+    }
+    
+    /// <summary>
+    /// Создание вспомогательной сетки.
+    /// </summary>
+    private void InitializeAdditionalGrid()
+    {
+      additionalGrid = new Dictionary<int, double>();
+      
       for (int i = -1; i <= Configuration.GridPoints - 2; i++)
       {
         additionalGrid[i] = 0.5 * (grid[i + 1] + grid[i + 2]);
       }
+      
       additionalGrid[-2] = grid[0];
       additionalGrid[Configuration.GridPoints - 1] = grid[Configuration.GridPoints]; 
     }
