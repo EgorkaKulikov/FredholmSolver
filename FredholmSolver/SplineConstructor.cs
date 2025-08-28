@@ -15,26 +15,6 @@ namespace FredholmSolver
       double point     
       )
     {
-      var A1 = BSplineAtPoint(grid, 0, grid[1]);
-      var A2 = TrigSplineAtPoint(grid, 0, grid[1]);
-      var A3 = HypSplineAtPoint(grid, 0, grid[1]);
-      
-      var B1 = BSplineAtPoint(grid, 0, 0.5 * (grid[0] + grid[1]));
-      var B2 = TrigSplineAtPoint(grid, 0, 0.5 * (grid[0] + grid[1]));
-      var B3 = HypSplineAtPoint(grid, 0, 0.5 * (grid[0] + grid[1]));
-      
-      var C1 = BSplineAtPoint(grid, 0, 0.5 * (grid[1] + grid[2]));
-      var C2 = TrigSplineAtPoint(grid, 0, 0.5 * (grid[1] + grid[2]));
-      var C3 = HypSplineAtPoint(grid, 0, 0.5 * (grid[1] + grid[2]));
-      
-      var D1 = BSplineAtPoint(grid, 0, grid[2]);
-      var D2 = TrigSplineAtPoint(grid, 0, grid[2]);
-      var D3 = HypSplineAtPoint(grid, 0, grid[2]);
-      
-      var E1 = BSplineAtPoint(grid, 0, 0.5 * (grid[2] + grid[3]));
-      var E2 = TrigSplineAtPoint(grid, 0, 0.5 * (grid[2] + grid[3]));
-      var E3 = HypSplineAtPoint(grid, 0, 0.5 * (grid[2] + grid[3]));
-      
       switch (Configuration.ApproxType)
       {
         case ApproximationType.ShoenbergMarsden:
