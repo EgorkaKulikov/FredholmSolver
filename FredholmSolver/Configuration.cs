@@ -5,11 +5,11 @@ namespace FredholmSolver
   class Configuration
   {
     //Количество узлов сетки
-    public const int GridPoints = 15;
+    public const int GridPoints = 15; //10;
 
     //Отрезок аппроксимации (начало и конец сетки) и сдвиг для фиктивных точек
     public const double Left = 0.0;
-    public const double Right = 1.0 * Math.PI / 2; 
+    public const double Right = 1.0 * Math.PI / 2; //1;
     public static readonly double Eps = Math.Pow(10, -3);
 
     //Параметр регуляризации
@@ -21,6 +21,9 @@ namespace FredholmSolver
     
     //Функция точного решения уравнения Фредгольма
     public static Func<double, double> U = s => 2 * Math.Sin(s);
+    
+    //Функция точного решения уравнения Фредгольма
+    public static Func<double, double> HypCurve = s => Math.Atan(10*s);
 
     //Используемый метод аппроксимации
     public const ApproximationType ApproxType = ApproximationType.Proectional;

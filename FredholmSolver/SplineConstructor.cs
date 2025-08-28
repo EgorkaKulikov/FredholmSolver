@@ -15,6 +15,26 @@ namespace FredholmSolver
       double point     
       )
     {
+      var A1 = BSplineAtPoint(grid, 0, grid[1]);
+      var A2 = TrigSplineAtPoint(grid, 0, grid[1]);
+      var A3 = HypSplineAtPoint(grid, 0, grid[1]);
+      
+      var B1 = BSplineAtPoint(grid, 0, 0.5 * (grid[0] + grid[1]));
+      var B2 = TrigSplineAtPoint(grid, 0, 0.5 * (grid[0] + grid[1]));
+      var B3 = HypSplineAtPoint(grid, 0, 0.5 * (grid[0] + grid[1]));
+      
+      var C1 = BSplineAtPoint(grid, 0, 0.5 * (grid[1] + grid[2]));
+      var C2 = TrigSplineAtPoint(grid, 0, 0.5 * (grid[1] + grid[2]));
+      var C3 = HypSplineAtPoint(grid, 0, 0.5 * (grid[1] + grid[2]));
+      
+      var D1 = BSplineAtPoint(grid, 0, grid[2]);
+      var D2 = TrigSplineAtPoint(grid, 0, grid[2]);
+      var D3 = HypSplineAtPoint(grid, 0, grid[2]);
+      
+      var E1 = BSplineAtPoint(grid, 0, 0.5 * (grid[2] + grid[3]));
+      var E2 = TrigSplineAtPoint(grid, 0, 0.5 * (grid[2] + grid[3]));
+      var E3 = HypSplineAtPoint(grid, 0, 0.5 * (grid[2] + grid[3]));
+      
       switch (Configuration.ApproxType)
       {
         case ApproximationType.ShoenbergMarsden:
@@ -25,8 +45,10 @@ namespace FredholmSolver
         case  ApproximationType.Proectional:
           return BSplineAtPoint(grid, splineNumber, point);
         case ApproximationType.AveragingTrigonometric:
+        case ApproximationType.ProectionalTrigonometric:
           return TrigSplineAtPoint(grid, splineNumber, point);
         case ApproximationType.AveragingHyperbolic:
+        case ApproximationType.ProectionalHyperbolic:
           return HypSplineAtPoint(grid, splineNumber, point);
         default:
           throw new NotSupportedException($"Spline type {Configuration.ApproxType.ToString()} is not supported");

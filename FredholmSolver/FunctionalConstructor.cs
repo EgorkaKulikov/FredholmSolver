@@ -117,6 +117,46 @@ namespace FredholmSolver
           c = 1.0 * ch_c / zn;
           a = 1 - b - c;
           return a * f(additionalGrid[j - 1]) + b * f(additionalGrid[j]) + c * f(additionalGrid[j + 1]);
+        
+        case ApproximationType.ProectionalHyperbolic:
+        case ApproximationType.ProectionalTrigonometric:
+          if (j == -2)
+            return f(grid[0]);
+          
+          if (j == Configuration.GridPoints - 1)
+            return f(grid[Configuration.GridPoints]);
+          
+          SplineConstructor sc = new SplineConstructor();
+          var A = sc.SplineValueAtPoint(0, grid, grid[1]);
+          var B = sc.SplineValueAtPoint(0, grid, 0.5 * (grid[0] + grid[1]));
+          var C = sc.SplineValueAtPoint(0, grid, 0.5 * (grid[1] + grid[2]));
+          var D = sc.SplineValueAtPoint(0, grid, grid[2]);
+          var E = sc.SplineValueAtPoint(0, grid, 0.5 * (grid[2] + grid[3]));
+          
+          double K = -1.0 / ( A * C * D - A * A * E - B * D * D);
+          double K1 = A * E * K;
+          double K2 = -A * D * K;
+          double K3 = B * D * K;
+          
+          if (j == -1)
+            return K1 * f(grid[0]) + K2 * f(0.5 * (grid[0] + grid[1])) + K3 * f(grid[1]);
+          
+          if (j == Configuration.GridPoints - 2)
+            return K1 * f(grid[Configuration.GridPoints - 1])
+                   + K2 * f(0.5 * (grid[Configuration.GridPoints - 1] + grid[Configuration.GridPoints])) 
+                   + K3 * f(grid[Configuration.GridPoints]);
+          
+          K = 1.0 / (C * C * D - A * C * E - B * D * E - D * E * E);
+          K1 = E * E * K;
+          K2 = - D * E * K;
+          K3 = (C * D - A * E) * K;
+
+
+          return K1 * f(grid[j]) 
+                 + K2 * f(0.5 * (grid[j] + grid[j + 1]))
+                 + K3 * f(0.5 * (grid[j + 1] + grid[j + 2]))
+                 + K2 * f(0.5 * (grid[j + 2] + grid[j + 3]))
+                 + K1 * f(grid[j + 3]);
 
         default:
           throw new NotSupportedException($"Functional type {Configuration.ApproxType.ToString()} is not supported");

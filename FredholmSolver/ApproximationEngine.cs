@@ -55,6 +55,18 @@ namespace FredholmSolver
 
       return value;
     }
+    
+    public double ApproxFunction(Func<double, double> func, double point)
+    {
+      double value = 0;
+      for (int i = -2; i <= Configuration.GridPoints - 1; i++)
+      {
+        value += functionalConstructor.FunctionalValue(i, func, grid, additionalGrid) *
+                 splineConstructor.SplineValueAtPoint(i, grid, point) ;
+      }
+
+      return value;
+    }
 
     /// <summary>
     /// Определение вектора коэффициентов.

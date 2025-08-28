@@ -26,10 +26,35 @@ namespace FredholmSolver
       //шаг мелкой сетки
       double step = 1.0 * (Configuration.Right - Configuration.Left) / Configuration.GridPoints / 10;
 
+      /*
+      double error = 0.0;
+      Console.WriteLine("Point  Value   Appr   Error  ");
+      Console.WriteLine("---------------------------------------------------------");
+      
+      for (double point = Configuration.Left; point < Configuration.Right; point += step)
+      {
+        double realValue = Configuration.HypCurve(point);
+        double approxValue = engine.ApproxFunction(Configuration.HypCurve, point);
+        double pointError = Math.Abs(realValue - approxValue);
+
+        Console.WriteLine(
+          "{0:0.00}  {1:0.00000} {2:0.00000}  {3:0.00000}",
+          point, realValue, approxValue, pointError);
+
+        //вычисляем максимальное значение ошибки
+        if (pointError > error)
+        {
+          error = pointError;
+        }
+      }
+
+      return error;
+      */
+
       double error = 0.0;
       Console.WriteLine("Point  Value   Appr    ApprSloan   Error    SloanError");
       Console.WriteLine("---------------------------------------------------------");
-
+      
       for (double point = Configuration.Left; point < Configuration.Right; point += step)
       {
         //вычисляем реальное значение, приближённое, а также приближённое, уточнённое по Слоану
