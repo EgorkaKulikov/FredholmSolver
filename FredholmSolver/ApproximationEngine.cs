@@ -182,11 +182,11 @@ namespace FredholmSolver
     {
       grid = new Dictionary<int, double>();
 
-      var thetas  = new List<double> { 0.00, 0.06, 0.12, 0.17, 0.23, 0.30, 0.38, 0.47, 0.57, 0.69, 0.82, 0.95, 1.10, 1.25, 1.42, Math.PI / 2 };      
+      //var thetas  = new List<double> { 0.00, 0.06, 0.12, 0.17, 0.23, 0.30, 0.38, 0.47, 0.57, 0.69, 0.82, 0.95, 1.10, 1.25, 1.42, Math.PI / 2 };      
       
       for (int i = 0; i <= Configuration.GridPoints; i++)
       {
-        var coeff = thetas[i];  // 1.0 * i / Configuration.GridPoints;
+        var coeff =  1.0 * i / Configuration.GridPoints; // thetas[i]; 
         grid[i] = Configuration.Left + coeff * (Configuration.Right - Configuration.Left);
       }
       
