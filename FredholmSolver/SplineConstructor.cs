@@ -26,6 +26,8 @@ namespace FredholmSolver
           return BSplineAtPoint(grid, splineNumber, point);
         case ApproximationType.AveragingTrigonometric:
         case ApproximationType.ProectionalTrigonometric:
+        case ApproximationType.DeBoorFix1Trigonometric:
+        case ApproximationType.DeBoorFix2Trigonometric:
           return TrigSplineAtPoint(grid, splineNumber, point);
         case ApproximationType.AveragingHyperbolic:
         case ApproximationType.ProectionalHyperbolic:

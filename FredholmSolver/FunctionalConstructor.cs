@@ -49,8 +49,22 @@ namespace FredholmSolver
         
         case ApproximationType.DeBoorFix2:
           return f(grid[j + 2]) - 1.0 / 2 * (grid[j + 2] - grid[j + 1]) * fDer(grid[j + 2]);
+
+        case ApproximationType.DeBoorFix1Trigonometric:
+          return f(grid[j + 1]) + 1.0
+            * ((Math.Cos(grid[j + 2]) - Math.Cos(grid[j + 1])) * Math.Cos(grid[j + 2])
+               + (Math.Sin(grid[j + 2]) - Math.Sin(grid[j + 1])) * Math.Sin(grid[j + 2]))
+            / (-Math.Cos(grid[j + 2]) * Math.Sin(grid[j + 1]) + Math.Cos(grid[j + 1]) * Math.Sin(grid[j + 2]))
+            * fDer(grid[j + 1]);
+
+        case ApproximationType.DeBoorFix2Trigonometric:
+          return f(grid[j + 2]) + 1.0
+            * ((Math.Cos(grid[j + 2]) - Math.Cos(grid[j + 1])) * Math.Cos(grid[j + 1])
+               + (Math.Sin(grid[j + 2]) - Math.Sin(grid[j + 1])) * Math.Sin(grid[j + 1]))
+            / (-Math.Cos(grid[j + 2]) * Math.Sin(grid[j + 1]) + Math.Cos(grid[j + 1]) * Math.Sin(grid[j + 2]))
+            * fDer(grid[j + 2]);
         
-        case ApproximationType.Proectional:
+        /*case ApproximationType.Proectional:
           if (j == -2)
             return f(grid[0]);
           
@@ -70,7 +84,7 @@ namespace FredholmSolver
                  - 2.0 / 7 * f(0.5 * (grid[j] + grid[j + 1]))
                  + 10.0 / 7 * f(0.5 * (grid[j + 1] + grid[j + 2]))
                  - 2.0 / 7 * f(0.5 * (grid[j + 2] + grid[j + 3]))
-                 + 1.0 / 14 * f(grid[j + 3]);
+                 + 1.0 / 14 * f(grid[j + 3]);*/
 
         case ApproximationType.AveragingTrigonometric:
           if (j == -2 || j == Configuration.GridPoints - 1)
@@ -94,7 +108,7 @@ namespace FredholmSolver
           c = 1.0 * ch_c / zn;
           a = 1 - b - c;
           return a * f(additionalGrid[j - 1]) + b * f(additionalGrid[j]) + c * f(additionalGrid[j + 1]);
-
+        
         case ApproximationType.AveragingHyperbolic:
           if (j == -2 || j == Configuration.GridPoints - 1)
           {
@@ -118,6 +132,7 @@ namespace FredholmSolver
           a = 1 - b - c;
           return a * f(additionalGrid[j - 1]) + b * f(additionalGrid[j]) + c * f(additionalGrid[j + 1]);
         
+        case ApproximationType.Proectional:
         case ApproximationType.ProectionalHyperbolic:
         case ApproximationType.ProectionalTrigonometric:
           if (j == -2)
