@@ -31,6 +31,8 @@ namespace FredholmSolver
           return TrigSplineAtPoint(grid, splineNumber, point);
         case ApproximationType.AveragingHyperbolic:
         case ApproximationType.ProectionalHyperbolic:
+        case ApproximationType.DeBoorFix1Hyperbolic:
+        case ApproximationType.DeBoorFix2Hyperbolic:
           return HypSplineAtPoint(grid, splineNumber, point);
         default:
           throw new NotSupportedException($"Spline type {Configuration.ApproxType.ToString()} is not supported");
